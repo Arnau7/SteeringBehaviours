@@ -21,7 +21,7 @@ SceneCollisionAvoidance::SceneCollisionAvoidance()
 	Obstacle *obstacle = new Obstacle;
 	obstacle->setPosition(Vector2D(600, 300));
 	//zombie->setTarget(Vector2D(600, 300));
-	obstacle->loadSpriteTexture("../res/zombie2.png", 8);
+	obstacle->loadSpriteTexture("../res/rock.png", 1);
 	//obstacle.push_back(obstacle);
 }
 
