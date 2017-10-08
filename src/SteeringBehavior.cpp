@@ -2,6 +2,7 @@
 #include "SceneWanderBehavior.h"
 #include "ScenePathFollowing.h"
 #include "SceneFlocking.h"
+#include "SceneCollisionAvoidance.h"
 
 SteeringBehavior::SteeringBehavior()
 {
@@ -45,7 +46,7 @@ Vector2D SteeringBehavior::Seek(Agent *agent, Vector2D target, float dtime)
 	Vector2D steeringForce;
 	float minDistance = 5;
 	//float borderDistance = 50;
-	
+
 	if (agent->position.x < agent->perimeterBorder)
 		DesiredVelocity.x = agent->max_velocity;
 	else if (agent->position.x > agent->perimeterWidth - agent->perimeterBorder)
@@ -92,7 +93,7 @@ Vector2D SteeringBehavior::Seek(Agent *agent, Agent *target, float dtime)
 
 Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, float dtime)
 {
-	Vector2D DesiredVelocity = agent->position - target ;
+	Vector2D DesiredVelocity = agent->position - target;
 	//DesiredVelocity.Normalize();
 	//DesiredVelocity *= agent->max_velocity;
 	Vector2D steeringForce;
@@ -173,7 +174,7 @@ Vector2D SteeringBehavior::Wander(Agent *agent, float dtime)
 	float targetAngle = 0;
 	wanderAngle += RandomBinomial() * 20;
 	//targetAngle = (rand() / RAND_MAX)*25 + wanderAngle;
-	targetAngle =  agent->orientation + wanderAngle;
+	targetAngle = agent->orientation + wanderAngle;
 	Vector2D centerC = agent->getPosition() + agent->getVelocity().Normalize() * 750;
 
 	Vector2D targetPos;
@@ -189,15 +190,15 @@ Vector2D SteeringBehavior::SeekPath(Agent *agent, Vector2D target, float dtime)
 {
 	//Vector2D steeringForce;
 	Vector2D DesiredVelocity = target - agent->position;
-	
-	
-	
-		DesiredVelocity.Normalize();
-		DesiredVelocity *= agent->max_velocity;
-		Vector2D steeringForce = DesiredVelocity - agent->velocity;
-		steeringForce /= agent->max_velocity;
 
-		return steeringForce*agent->max_force;
+
+
+	DesiredVelocity.Normalize();
+	DesiredVelocity *= agent->max_velocity;
+	Vector2D steeringForce = DesiredVelocity - agent->velocity;
+	steeringForce /= agent->max_velocity;
+
+	return steeringForce*agent->max_force;
 }
 
 Vector2D SteeringBehavior::SeekPath(Agent *agent, Agent *target, float dtime)
@@ -220,17 +221,17 @@ Vector2D SteeringBehavior::Flocking(Agent *agent, std::vector<Agent*> target, fl
 
 	for each (Agent* x in target)
 	{
-			//Vector2D dist = x->getPosition() - agent->getPosition();
-			//int len = dist.Length();
+		//Vector2D dist = x->getPosition() - agent->getPosition();
+		//int len = dist.Length();
 
-		// PER AFEGIR: SI LA DISTÀNCIA ENTRE UN DELS AGENTS I EL TARGET ES MENOR QUE 'X' SET VELOCITY TO '0' A TOTS
+	// PER AFEGIR: SI LA DISTÀNCIA ENTRE UN DELS AGENTS I EL TARGET ES MENOR QUE 'X' SET VELOCITY TO '0' A TOTS
 
-			if (Vector2D().Distance(x->getPosition(), agent->getPosition()) < NEIGHBOUR_RADIUS) {
-				sepVec += (agent->getPosition() - x->getPosition());
-				avaragePos += x->getPosition();
-				avarageVel += x->getVelocity();
-				neigbourCount++;
-			}
+		if (Vector2D().Distance(x->getPosition(), agent->getPosition()) < NEIGHBOUR_RADIUS) {
+			sepVec += (agent->getPosition() - x->getPosition());
+			avaragePos += x->getPosition();
+			avarageVel += x->getVelocity();
+			neigbourCount++;
+		}
 	}
 	sepVec /= neigbourCount;
 	sepVec.Normalize(1);
@@ -255,3 +256,19 @@ Vector2D SteeringBehavior::Flocking(Agent *agent, Vector2D target, float dtime)
 	return steeringForce*agent->max_force;
 }
 
+Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Agent*> target, float dtime) {
+
+	const int avoidanceLookahead = 200;
+
+	Vector2D raycastVector = agent->position;
+	raycastVector += agent->velocity.Normalize() * avoidanceLookahead;
+	Vector2D intersectionPoint, normalVector;
+	bool obstacleAvoidanceCollision = false;
+
+	for each(Agent* object in target)
+	{
+
+
+	} 
+	return 0;
+}

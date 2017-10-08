@@ -29,4 +29,6 @@ public:
 	Vector2D SeekPath(Agent *agent, Agent *target, float dtime);
 	Vector2D Flocking(Agent *agent, Vector2D target, float dtime);
 	Vector2D Flocking(Agent *agent, std::vector<Agent*> target, float dtime);
+	Vector2D CollisionAvoidance(Agent *agent, std::vector<Agent*> target, float dtime);
+	Vector2D CollisionAvoidance(Agent *agent, Agent *target, float dtime);
 };
