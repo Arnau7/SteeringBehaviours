@@ -4,12 +4,14 @@
 
 #include "SDL_SimpleApp.h"
 #include "SceneKinematicSeek.h"
-#include "SceneKinematicFlee.h"
+#include "SceneFlee.h"
 #include "ScenePursue.h"
 #include "SceneEvade.h"
 #include "SceneWanderBehavior.h"
 #include "ScenePathFollowing.h"
 #include "SceneFlocking.h"
+#include "SceneCollisionAvoidance.h"
+#include "SceneObstacleAvoidance.h"
 
 
 using namespace std;
@@ -42,7 +44,7 @@ int main(int argc, char ** argv)
 			if (event.key.keysym.scancode == SDL_SCANCODE_2)
 			{
 				delete(curr_scene);
-				curr_scene = new SceneKinematicFlee;
+				curr_scene = new SceneFlee;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_3)
@@ -73,6 +75,18 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneFlocking;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_8)
+			{
+				delete(curr_scene);
+				curr_scene = new SceneCollisionAvoidance;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_9)
+			{
+				delete(curr_scene);
+				curr_scene = new SceneObstacleAvoidance;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))

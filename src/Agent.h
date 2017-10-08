@@ -52,6 +52,7 @@ public:
 	int currentTargetIndex = 0;
 
 	const int perimeterBorder = 100;
+	//const int perimeterBorder2 = 80;
 	const int perimeterWidth = 1300;
 	const int perimeterHeight = 800;
 };
