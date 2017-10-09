@@ -18,11 +18,11 @@ SceneCollisionAvoidance::SceneCollisionAvoidance()
 	zombie->loadSpriteTexture("../res/zombie2.png", 8);
 	agents.push_back(zombie);
 
-	Obstacle *obstacle = new Obstacle;
-	obstacle->setPosition(Vector2D(600, 300));
-	//zombie->setTarget(Vector2D(600, 300));
-	obstacle->loadSpriteTexture("../res/rock.png", 1);
-	//obstacle.push_back(obstacle);
+	//Obstacle *obstacle = new Obstacle;
+	//obstacle->setPosition(Vector2D(600, 300));
+	////zombie->setTarget(Vector2D(600, 300));
+	//obstacle->loadSpriteTexture("../res/rock.png", 1);
+	////obstacle.push_back(obstacle);
 }
 
 SceneCollisionAvoidance::~SceneCollisionAvoidance()
