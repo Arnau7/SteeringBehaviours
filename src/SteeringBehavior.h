@@ -31,4 +31,9 @@ public:
 	Vector2D Flocking(Agent *agent, std::vector<Agent*> target, float dtime);
 	Vector2D CollisionAvoidance(Agent *agent, std::vector<Agent*> target, float dtime);
 	Vector2D CollisionAvoidance(Agent *agent, Agent *target, float dtime);
+
+	Vector2D CollisionRayCast(Agent *agent, std::vector<Agent*> obstacles, float dtime);
+	Vector2D CollisionRayCast(Agent *agent, Agent *obstacles, float dtime);
+
+
 };

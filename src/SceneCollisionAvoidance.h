@@ -12,9 +12,13 @@ public:
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	const char* getTitle();
-
+	bool inside = false;
+	float shortestDist = 100;
+	bool colDetec;
+	Agent* nearestTarget;
 private:
 	std::vector<Agent*> agents;
+	std::vector<Agent*> obstacles;
 	Vector2D target;
 };
 

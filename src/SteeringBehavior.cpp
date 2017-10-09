@@ -272,3 +272,25 @@ Vector2D SteeringBehavior::CollisionAvoidance(Agent *agent, std::vector<Agent*> 
 	} 
 	return 0;
 }
+
+Vector2D SteeringBehavior::CollisionRayCast(Agent *agent, std::vector<Agent*> target, float dtime) {
+
+	const int avoidanceLookahead = 200;
+
+	Vector2D raycastVector = agent->position;
+	raycastVector += agent->velocity.Normalize() * avoidanceLookahead;
+	Vector2D intersectionPoint, normalVector,steeringForce;
+	bool obstacleAvoidanceCollision = false;
+
+	for each(Agent* object in target)
+	{
+		obstacleAvoidanceCollision = Vector2DUtils::SegmentSegmentIntersection(object->getPosition(), object->getPosition() + Vector2D(200, 0), agent->getPosition(), raycastVector);
+		if (obstacleAvoidanceCollision) break;
+	}
+	if (obstacleAvoidanceCollision) {
+		Vector2D avoidTarget = intersectionPoint;
+		avoidTarget += normalVector * 150;
+		steeringForce = Seek(agent, avoidTarget, dtime);
+	}
+	return steeringForce;
+}
