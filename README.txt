@@ -24,7 +24,6 @@ Exemple:	(Tecla) 	: (Behaviour)
 		    
 8	: Collision Avoidance + Perimeter Border
 	
-Altres 
-tecles:
+Altres tecles:
 	
 Q/Esc	: Quit
