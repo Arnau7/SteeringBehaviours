@@ -20,7 +20,7 @@ ScenePathFollowing::~ScenePathFollowing()
 	{
 		delete agents[i];
 	}
-	delete path;
+	
 }
 
 void ScenePathFollowing::update(float dtime, SDL_Event *event)
