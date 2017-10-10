@@ -99,5 +99,5 @@ void SceneKinematicSeek::draw()
 
 const char* SceneKinematicSeek::getTitle()
 {
-	return "SDL Steering Behaviors :: KinematicSeek Demo";
+	return "SDL Steering Behaviors :: Seek Demo";
 }

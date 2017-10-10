@@ -30,8 +30,29 @@ SceneCollisionAvoidance::SceneCollisionAvoidance()
 	Agent *obstacle3 = new Agent;
 	obstacle3->setPosition(Vector2D(900, 300));
 	//obstacle->setTarget(Vector2D(640, 360));
-	obstacle3->loadSpriteTexture("../res/rock.png", 1);
+	obstacle3->loadSpriteTexture("../res/zombie1.png", 8);
 	obstacles.push_back(obstacle3);
+	//target = Vector2D(640, 360);
+
+	Agent *obstacle4 = new Agent;
+	obstacle4->setPosition(Vector2D(300, 600));
+	//obstacle->setTarget(Vector2D(640, 360));
+	obstacle4->loadSpriteTexture("../res/zombie1.png", 8);
+	obstacles.push_back(obstacle4);
+	//target = Vector2D(640, 360);
+
+	Agent *obstacle5 = new Agent;
+	obstacle5->setPosition(Vector2D(600, 600));
+	//obstacle->setTarget(Vector2D(640, 360));
+	obstacle5->loadSpriteTexture("../res/zombie2.png", 8);
+	obstacles.push_back(obstacle5);
+	//target = Vector2D(640, 360);
+
+	Agent *obstacle6 = new Agent;
+	obstacle6->setPosition(Vector2D(900, 600));
+	//obstacle->setTarget(Vector2D(640, 360));
+	obstacle6->loadSpriteTexture("../res/zombie1.png", 8);
+	obstacles.push_back(obstacle6);
 	//target = Vector2D(640, 360);
 
 }
@@ -72,57 +93,91 @@ void SceneCollisionAvoidance::update(float dtime, SDL_Event *event)
 		x->update(steering_force, dtime, event);
 	}*/
 	
+	float dymanic = agents[0]->getVelocity().Length() / agents[0]->getMaxVelocity();
 	
+	Vector2D raycastVector = agents[0]->getPosition();
+	raycastVector += (agents[0]->getVelocity().Normalize() * 100)*dymanic;
+
 	
+
+	Vector2D raycastVector2 = agents[0]->getPosition();
+	raycastVector2 += (agents[0]->getVelocity().Normalize() * 100) * dymanic *0.5;
+
+	
+	Vector2D steering_force = agents[0]->Behavior()->Seek(agents[0],agents[0]->getTarget(), dtime);
+	Vector2D avoidance_force;
 	
 	for each (Agent* x in obstacles)
 	{
-		if (IsInsideCone(x->getPosition(), agents[0]->getPosition(), agents[0]->getPosition() + (agents[0]->getVelocity().Normalize() * 200), 30)) {
-			
-			float currDist = Vector2D().Distance(agents[0]->getPosition(), x->getPosition());
-			if (currDist < shortestDist) {
-				nearestTarget = x;
-				shortestDist = currDist;
-				colDetec = true;
-			}
-			else if(currDist > shortestDist)
-			{
-				colDetec = false;
-			}
-		}	
+		if (Vector2D().Distance(raycastVector, x->getPosition()) <= 40 || Vector2D().Distance(raycastVector2, x->getPosition()) <= 40) {
+			avoidance_force = raycastVector - x->getPosition();
+		}
 	}
-	
-	if (!colDetec) {
-		Vector2D steering_force = agents[0]->Behavior()->Seek(agents[0], agents[0]->getTarget(), dtime);
-		agents[0]->update(steering_force, dtime, event);
-	}
-	else if (colDetec) {
-		
-		Vector2D steering_force = agents[0]->Behavior()->Flee(agents[0], nearestTarget->getPosition(), dtime);
-		agents[0]->update(steering_force, dtime, event);
-	}
-	
-	
+	steering_force += avoidance_force;
+	agents[0]->update(steering_force, dtime, event);
+
+	//for each (Agent* x in obstacles)
+	//{
+	//	if (IsInsideCone(x->getPosition(), agents[0]->getPosition(), agents[0]->getPosition() + (agents[0]->getVelocity().Normalize() * 200), 30)) {
+
+	//		float currDist = Vector2D().Distance(agents[0]->getPosition(), x->getPosition());
+	//		if (currDist < shortestDist) {
+	//			nearestTarget = x;
+	//			shortestDist = currDist;
+	//			colDetec = true;
+	//		}
+
+	//	}
+	//	else
+	//	{
+	//		colDetec = false;
+	//	}
+	//}
+	//Vector2D flee_force;
+	//Vector2D steering_force;
+	//if (colDetec) {
+	//	flee_force = agents[0]->Behavior()->Flee(agents[0], nearestTarget->getPosition(), dtime);
+	//	//agents[0]->update(steering_force, dtime, event);
+	//}
+	//else {
+	//	steering_force = agents[0]->Behavior()->Seek(agents[0], agents[0]->getTarget(), dtime);
+	//	
+	//}
+	//steering_force += flee_force;
+	//agents[0]->update(steering_force, dtime, event);
+
 }
+	
+	
 
 void SceneCollisionAvoidance::draw()
 {
+	float dymanic = agents[0]->getVelocity().Length() / agents[0]->getMaxVelocity();
+
 	Vector2D raycastVector = agents[0]->getPosition();
-	raycastVector += (agents[0]->getVelocity().Normalize() * 200);
+	raycastVector += (agents[0]->getVelocity().Normalize() * 100)*dymanic;
 
-
+	Vector2D raycastVector2 = agents[0]->getPosition();
+	raycastVector2 += (agents[0]->getVelocity().Normalize() * 100)*dymanic*0.5;
 
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 
 	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), agents[0]->getPosition().x, agents[0]->getPosition().y, raycastVector.x, raycastVector.y);
 	
+	draw_circle(TheApp::Instance()->getRenderer(), raycastVector.x, raycastVector.y, 10, 0, 255, 0, 255);
+	draw_circle(TheApp::Instance()->getRenderer(), raycastVector2.x, raycastVector2.y, 10, 0, 255, 0, 255);
 
 	agents[0]->draw();
 	for each (Agent* x in obstacles)
 	{
 		x->draw();
-		draw_circle(TheApp::Instance()->getRenderer(), x->getPosition().x, x->getPosition().y, 40, 255, 0, 0, 255);
+		
 	}
+	SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 255, 0, 255);
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 100, 100, 700); //LEFT
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 100, 1200, 100); //TOP
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 1200, 100, 1200, 700); //RIGHT
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 700, 1200, 700); //BOTTOM
 }
 
 const char* SceneCollisionAvoidance::getTitle()

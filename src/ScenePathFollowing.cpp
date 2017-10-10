@@ -20,6 +20,7 @@ ScenePathFollowing::~ScenePathFollowing()
 	{
 		delete agents[i];
 	}
+	delete path;
 }
 
 void ScenePathFollowing::update(float dtime, SDL_Event *event)
@@ -31,11 +32,12 @@ void ScenePathFollowing::update(float dtime, SDL_Event *event)
 	case SDL_MOUSEBUTTONDOWN:
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
-			
-			path->pathArray[countPath] = Vector2D(event->button.x,event->button.y);
-			//draw_circle(TheApp::Instance()->getRenderer(), (int)event->button.x, (int)event->button.y, 15, 255, 0, 0, 255);
-			countPath += 1;
-			click = true;
+			if (countPath < 25) {
+				path->pathArray[countPath] = Vector2D(event->button.x, event->button.y);
+				//draw_circle(TheApp::Instance()->getRenderer(), (int)event->button.x, (int)event->button.y, 15, 255, 0, 0, 255);
+				countPath += 1;
+				click = true;
+			}
 			//target = Vector2D((float)(event->button.x), (float)(event->button.y));
 			//agents[0]->setTarget(target);
 		}

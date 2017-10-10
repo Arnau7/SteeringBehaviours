@@ -54,9 +54,6 @@
     <ClCompile Include="..\src\SceneCollisionAvoidance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SceneObstacleAvoidance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\SceneFlee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SceneCollisionAvoidance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\SceneObstacleAvoidance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SceneFlee.h">

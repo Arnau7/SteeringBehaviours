@@ -94,6 +94,7 @@ Vector2D SteeringBehavior::Seek(Agent *agent, Agent *target, float dtime)
 Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, float dtime)
 {
 	Vector2D DesiredVelocity = agent->position - target;
+	
 	//DesiredVelocity.Normalize();
 	//DesiredVelocity *= agent->max_velocity;
 	Vector2D steeringForce;
@@ -110,7 +111,7 @@ Vector2D SteeringBehavior::Flee(Agent *agent, Vector2D target, float dtime)
 		steeringForce = DesiredVelocity - agent->velocity;
 		steeringForce /= agent->max_velocity;
 		steeringForce *= agent->max_force;
-		//EL GUILLEM FA JOCS DE MUSICA QUE NO ES FAN
+		
 	}
 	return steeringForce;
 }

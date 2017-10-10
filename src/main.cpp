@@ -11,7 +11,7 @@
 #include "ScenePathFollowing.h"
 #include "SceneFlocking.h"
 #include "SceneCollisionAvoidance.h"
-#include "SceneObstacleAvoidance.h"
+
 
 
 using namespace std;
@@ -83,12 +83,7 @@ int main(int argc, char ** argv)
 				curr_scene = new SceneCollisionAvoidance;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
-			if (event.key.keysym.scancode == SDL_SCANCODE_9)
-			{
-				delete(curr_scene);
-				curr_scene = new SceneObstacleAvoidance;
-				app->setWindowTitle(curr_scene->getTitle());
-			}
+			
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))
 			{
 				quit = true;

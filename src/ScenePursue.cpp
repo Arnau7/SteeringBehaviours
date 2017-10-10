@@ -62,6 +62,12 @@ void ScenePursue::draw()
 	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), agents[0]->getPosition().x, agents[0]->getPosition().y, ((agents[0]->getTarget().x - agents[0]->getPosition().x) - agents[0]->getVelocity().x) + agents[0]->getTarget().x, ((agents[0]->getTarget().y - agents[0]->getPosition().y) - agents[0]->getVelocity().y) + agents[0]->getTarget().y);
 	agents[0]->draw();
 	agents[1]->draw();
+
+	SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 255, 0, 255);
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 100, 100, 700); //LEFT
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 100, 1200, 100); //TOP
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 1200, 100, 1200, 700); //RIGHT
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 700, 1200, 700); //BOTTOM
 }
 
 const char* ScenePursue::getTitle()

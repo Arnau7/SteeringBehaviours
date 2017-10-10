@@ -13,7 +13,7 @@ public:
 	void draw();
 	const char* getTitle();
 	bool inside = false;
-	float shortestDist = 100;
+	float shortestDist = 250;
 	bool colDetec;
 	Agent* nearestTarget;
 private:

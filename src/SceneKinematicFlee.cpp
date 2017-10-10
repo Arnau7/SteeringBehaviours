@@ -44,6 +44,10 @@ void SceneKinematicFlee::draw()
 {
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	agents[0]->draw();
+
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), agents[0]->getPosition().x, agents[0]->getPosition().y, agents[0]->getTarget().x, agents[0]->getTarget().y);
+	SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 0, 255, 255);
+	SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), agents[0]->getPosition().x, agents[0]->getPosition().y, ((agents[0]->getTarget().x - agents[0]->getPosition().x) - agents[0]->getVelocity().x) + agents[0]->getTarget().x, ((agents[0]->getTarget().y - agents[0]->getPosition().y) - agents[0]->getVelocity().y) + agents[0]->getTarget().y);
 }
 
 const char* SceneKinematicFlee::getTitle()
